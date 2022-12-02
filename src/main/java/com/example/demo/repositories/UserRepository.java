@@ -10,5 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+    @Transactional
+    @Modifying
+    @Query("UPDATE User u set u.status = 2 where u.id = :id")
+    void updateStatus(@Param("id") Integer id);
 
+    @Transactional
+    @Modifying
+    @Query("UPDATE User u set u.id_role = :id_role where u.id = :id AND u.status = 1")
+    void updateIdRole(@Param("id") Integer id, @Param("id_role") Integer id_role);
 }

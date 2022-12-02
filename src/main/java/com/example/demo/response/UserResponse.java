@@ -1,28 +1,24 @@
-package com.example.demo.models;
+package com.example.demo.response;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.sql.Date;
-import java.time.LocalDateTime;
-
-@Entity
-@Table(name = "users")
-public class User {
-    @Id
-    @Column(unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class UserResponse {
+    @JsonProperty("id")
     private Integer id;
-    @Column(name = "name")
+    @JsonProperty("name")
     private String name;
-    @Column(name = "username")
+    @JsonProperty("username")
     private String username;
-    @Column(name = "password")
-    private String password;
-    @Column(name = "status")
+    @JsonProperty("status")
     private Integer status;
-    @Column(name = "ts_insert")
-    private LocalDateTime ts_insert;
-    @Column(name = "id_role")
+    @JsonProperty("ts_insert")
+    private Long ts_insert;
+
+    @JsonProperty("id_role")
     private Integer id_role;
 
     public Integer getId() {
@@ -49,14 +45,6 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public Integer getStatus() {
         return status;
     }
@@ -65,11 +53,11 @@ public class User {
         this.status = status;
     }
 
-    public LocalDateTime getTs_insert() {
+    public Long getTs_insert() {
         return ts_insert;
     }
 
-    public void setTs_insert(LocalDateTime ts_insert) {
+    public void setTs_insert(Long ts_insert) {
         this.ts_insert = ts_insert;
     }
 

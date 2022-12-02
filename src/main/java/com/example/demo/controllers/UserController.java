@@ -1,7 +1,8 @@
 package com.example.demo.controllers;
 
 import com.example.demo.models.User;
-import com.example.demo.repositories.UserRepository;
+import com.example.demo.request.RequestDTO;
+import com.example.demo.response.ResponseDTO;
 import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,8 +29,8 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public User guardarUser(@RequestBody User user){
-        return this.userService.guardarUsuario(user);
+    public ResponseEntity<ResponseDTO> guardarUser(@RequestBody RequestDTO requestDTO){
+        return this.userService.guardarUsuario(requestDTO);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -38,11 +39,16 @@ public class UserController {
         if(userOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.OK).body("No se encontró");
         }
-
         //Aqui hacer la eliminación
+        return ResponseEntity.status(HttpStatus.OK).body(userService.eliminarUsuario(id));
+    }
 
-
-
-        return ResponseEntity.status(HttpStatus.OK).body("ok");
+    @PostMapping("/update/{id}/{id_role}")
+    public ResponseEntity<Object> asignarRol(@PathVariable("id") Integer id, @PathVariable("id_role") Integer id_role){
+        Optional<User> userOptional = userService.obtenerId(id);
+        if(userOptional.isEmpty()){
+            return ResponseEntity.status(HttpStatus.OK).body("No se encontró");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(userService.actualizarRol(id, id_role));
     }
 }
