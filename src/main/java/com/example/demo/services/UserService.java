@@ -38,6 +38,7 @@ public class UserService {
 
         //setear el ts_insert
         requestDTO.getRequest().getUser().setTs_insert(localDateTime);
+        //requestDTO.getRequest().getUser().setPassword(password);
         User user = userRepository.save(requestDTO.getRequest().getUser());
 
         //Configurando la respuesta del usuario
